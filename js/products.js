@@ -47,6 +47,7 @@ const app =createApp({
           window.location = 'index.html';
         })
     },
+    // 模組化openModal(isNew, item)
     openModal(isNew, item) {
       if (isNew === 'new') {
         this.tempProduct = {
@@ -71,7 +72,7 @@ app.component('pagination', {
   template: '#pagination',
 // 1-建立props去接收pages
   props: ['pages'],
-  
+// 2-使用$emit傳出目前的pages
   methods: {
     emitPages(page) {
       this.$emit('emit-pages', page);
@@ -96,8 +97,9 @@ app.component('productModal', {
     });
   },
   methods: {
+      //將方法綁到元件裡
+      // 更新商品
     updateProduct() {
-      // 新增商品
       let api = `${this.apiUrl}/api/${this.apiPath}/admin/product`;
       let httpMethod = 'post';
       // 當不是新增商品時則切換成編輯商品 API
