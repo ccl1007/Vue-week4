@@ -2,12 +2,13 @@ import { createApp } from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.9/vue.
 
 let productModal = null;
 let delProductModal = null;
+const apiUrl= 'https://vue3-course-api.hexschool.io/v2';
+const apiPath= 'luku612150';
 
 const app =createApp({
   data() {
     return {
-      apiUrl: 'https://vue3-course-api.hexschool.io/v2',
-      apiPath: 'luku612150',
+
       products: [],
       tempProduct: {
         imagesUrl: [],
@@ -23,7 +24,7 @@ const app =createApp({
   },
   methods: {
     checkAdmin() {
-      const url = `${this.apiUrl}/api/user/check`;
+      const url = `${apiUrl}/api/user/check`;
       axios.post(url)
         .then(() => {
           this.getData();
@@ -35,7 +36,7 @@ const app =createApp({
     },
     getData(page = 1) {//參數預設值
     // 1-1 修改api(products 包含分頁)
-      const url = `${this.apiUrl}/api/${this.apiPath}/admin/products?page=${page}`;//query 參數
+      const url = `${apiUrl}/api/${apiPath}/admin/products?page=${page}`;//query 參數
 
       axios.get(url)
         .then((response) => {
@@ -86,8 +87,7 @@ app.component('productModal', {
   props: ['product', 'isNew'],
   data() {
     return {
-      apiUrl: 'https://vue3-course-api.hexschool.io/v2',
-      apiPath: 'luku612150',
+
     };
   },
   mounted() {
@@ -100,11 +100,11 @@ app.component('productModal', {
       //將方法綁到元件裡
       // 更新商品
     updateProduct() {
-      let api = `${this.apiUrl}/api/${this.apiPath}/admin/product`;
+      let api = `${apiUrl}/api/${apiPath}/admin/product`;
       let httpMethod = 'post';
       // 當不是新增商品時則切換成編輯商品 API
       if (!this.isNew) {
-        api = `${this.apiUrl}/api/${this.apiPath}/admin/product/${this.product.id}`;
+        api = `${apiUrl}/api/${apiPath}/admin/product/${this.product.id}`;
         httpMethod = 'put';
       }
 
@@ -134,8 +134,6 @@ app.component('delProductModal', {
   props: ['item'],
   data() {
     return {
-      apiUrl: 'https://vue3-course-api.hexschool.io/v2',
-      apiPath: 'hexschoolvue',
     };
   },
   mounted() {
@@ -146,7 +144,7 @@ app.component('delProductModal', {
   },
   methods: {
     delProduct() {
-      axios.delete(`${this.apiUrl}/api/${this.apiPath}/admin/product/${this.item.id}`).then((response) => {
+      axios.delete(`${apiUrl}/api/${apiPath}/admin/product/${this.item.id}`).then((response) => {
         this.hideModal();
         this.$emit('update');
       }).catch((error) => {
